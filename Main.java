@@ -2,12 +2,14 @@ import java.util.Scanner;
 
 /**
  * Sistema de Controle de Despesas
- * Classe principal com menu de navegação
- * Versão: 0.0.1
+ * Classe principal com menu de navegação e integração com MVP
+ * Versão: 0.0.2
  */
 public class Main {
+    private static GerenciadorDespesas gerenciador = new GerenciadorDespesas();
+    private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         int opcao = 0;
 
         do {
@@ -18,28 +20,22 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("\n>>> Funcionalidade: Entrar Despesa");
-                    System.out.println("Esta funcionalidade permitirá cadastrar uma nova despesa.\n");
+                    entrarDespesa();
                     break;
                 case 2:
-                    System.out.println("\n>>> Funcionalidade: Anotar Pagamento");
-                    System.out.println("Esta funcionalidade permitirá registrar o pagamento de uma despesa.\n");
+                    anotarPagamento();
                     break;
                 case 3:
-                    System.out.println("\n>>> Funcionalidade: Listar Despesas em Aberto no período");
-                    System.out.println("Esta funcionalidade exibirá todas as despesas pendentes.\n");
+                    listarDespesasPendentes();
                     break;
                 case 4:
-                    System.out.println("\n>>> Funcionalidade: Listar Despesas Pagas no período");
-                    System.out.println("Esta funcionalidade exibirá todas as despesas já pagas.\n");
+                    listarDespesasPagas();
                     break;
                 case 5:
-                    System.out.println("\n>>> Funcionalidade: Gerenciar Tipos de Despesa");
-                    System.out.println("Esta funcionalidade permitirá criar, editar e excluir tipos de despesa.\n");
+                    gerenciarTiposDespesa();
                     break;
                 case 6:
-                    System.out.println("\n>>> Funcionalidade: Gerenciar Usuários");
-                    System.out.println("Esta funcionalidade permitirá cadastrar e gerenciar usuários do sistema.\n");
+                    gerenciarUsuarios();
                     break;
                 case 7:
                     System.out.println("\n>>> Encerrando o sistema. Até logo!");
@@ -53,7 +49,7 @@ public class Main {
     }
 
     private static void exibirMenu() {
-        System.out.println("========================================");
+        System.out.println("\n========================================");
         System.out.println("   SISTEMA DE CONTROLE DE DESPESAS");
         System.out.println("========================================");
         System.out.println("1. Entrar Despesa");
@@ -64,5 +60,94 @@ public class Main {
         System.out.println("6. Gerenciar Usuários");
         System.out.println("7. Sair");
         System.out.println("========================================");
+    }
+
+    private static void entrarDespesa() {
+        System.out.println("\n>>> CADASTRAR NOVA DESPESA");
+        
+        System.out.print("Descrição: ");
+        String descricao = scanner.nextLine();
+        
+        System.out.print("Valor: R$ ");
+        double valor = scanner.nextDouble();
+        scanner.nextLine(); // Limpar buffer
+        
+        System.out.print("Categoria: ");
+        String categoria = scanner.nextLine();
+        
+        gerenciador.cadastrarDespesa(descricao, valor, categoria);
+    }
+
+    private static void anotarPagamento() {
+        System.out.println("\n>>> REGISTRAR PAGAMENTO");
+        
+        // Primeiro, listar despesas pendentes
+        gerenciador.listarDespesasPendentes();
+        
+        System.out.print("\nInforme o ID da despesa a ser paga: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Limpar buffer
+        
+        gerenciador.registrarPagamento(id);
+    }
+
+    private static void listarDespesasPendentes() {
+        System.out.println("\n>>> DESPESAS EM ABERTO");
+        gerenciador.listarDespesasPendentes();
+        
+        System.out.println("\nDeseja realizar alguma ação?");
+        System.out.println("1. Excluir despesa");
+        System.out.println("2. Voltar ao menu principal");
+        System.out.print("Opção: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        
+        if (opcao == 1) {
+            System.out.print("Informe o ID da despesa a excluir: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+            gerenciador.excluirDespesa(id);
+        }
+    }
+
+    private static void listarDespesasPagas() {
+        System.out.println("\n>>> DESPESAS PAGAS");
+        gerenciador.listarDespesasPagas();
+        
+        System.out.println("\nDeseja realizar alguma ação?");
+        System.out.println("1. Excluir despesa");
+        System.out.println("2. Voltar ao menu principal");
+        System.out.print("Opção: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        
+        if (opcao == 1) {
+            System.out.print("Informe o ID da despesa a excluir: ");
+            int id = scanner.nextInt();
+            scanner.nextLine();
+            gerenciador.excluirDespesa(id);
+        }
+    }
+
+    private static void gerenciarTiposDespesa() {
+        System.out.println("\n>>> GERENCIAR TIPOS DE DESPESA");
+        System.out.println("Esta funcionalidade será implementada na próxima versão.");
+        System.out.println("Por enquanto, você pode usar categorias livres ao cadastrar despesas.\n");
+        
+        // Funcionalidade de relatório por categoria
+        System.out.print("Deseja ver um relatório por categoria? (S/N): ");
+        String resposta = scanner.nextLine();
+        
+        if (resposta.equalsIgnoreCase("S")) {
+            System.out.print("Informe a categoria: ");
+            String categoria = scanner.nextLine();
+            gerenciador.relatorioPorCategoria(categoria);
+        }
+    }
+
+    private static void gerenciarUsuarios() {
+        System.out.println("\n>>> GERENCIAR USUÁRIOS");
+        System.out.println("Esta funcionalidade será implementada em versões futuras.");
+        System.out.println("Incluirá cadastro de usuários, login e criptografia de senhas.\n");
     }
 }

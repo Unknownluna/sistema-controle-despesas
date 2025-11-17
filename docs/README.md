@@ -136,9 +136,7 @@ O sistema implementará os seguintes conceitos de Programação Orientada a Obje
 7. **Métodos e atributos estáticos**: Contadores globais, métodos utilitários
 8. **Criptografia**: Método para criptografar senhas antes do armazenamento
 
-## Como Executar (v0.0.1)
-
-Nesta versão inicial, o sistema possui apenas o menu de navegação:
+## Como Executar
 
 1. Certifique-se de ter o **Java Development Kit (JDK)** instalado (versão 8 ou superior)
 2. Clone o repositório:
@@ -149,14 +147,30 @@ Nesta versão inicial, o sistema possui apenas o menu de navegação:
    ```bash
    cd sistema-controle-despesas
    ```
-4. Compile o arquivo Java:
+4. Compile todos os arquivos Java:
    ```bash
-   javac Main.java
+   javac Main.java Despesa.java GerenciadorDespesas.java
    ```
 5. Execute o programa:
    ```bash
    java Main
    ```
+
+### Exemplo de Uso
+
+1. Selecione a opção **1** para cadastrar uma despesa
+2. Informe descrição, valor e categoria
+3. Selecione a opção **3** para ver despesas pendentes
+4. Selecione a opção **2** para registrar um pagamento
+5. Selecione a opção **4** para ver despesas pagas
+6. Selecione a opção **5** para gerar relatório por categoria
+
+## Documentação Técnica
+
+Para informações detalhadas sobre as classes, métodos e atributos implementados, consulte:
+
+- **[CLASSES.md](CLASSES.md)** - Documentação completa das classes do sistema
+- **[CHANGELOG.md](CHANGELOG.md)** - Histórico detalhado de versões
 
 ## Estrutura de Diretórios
 
@@ -164,17 +178,35 @@ Nesta versão inicial, o sistema possui apenas o menu de navegação:
 sistema-controle-despesas/
 ├── docs/
 │   ├── README.md          # Documentação principal
-│   └── CHANGELOG.md       # Histórico de versões
+│   ├── CHANGELOG.md       # Histórico de versões
+│   └── CLASSES.md         # Documentação das classes
 ├── Main.java              # Classe principal com menu
+├── Despesa.java           # Classe modelo Despesa
+├── GerenciadorDespesas.java  # Classe de serviço
 └── .git/                  # Controle de versão Git
 ```
+
+## Versão Atual
+
+**v0.0.2** - MVP funcional com armazenamento em memória
+
+### Funcionalidades Implementadas
+
+- Cadastro de despesas com descrição, valor e categoria
+- Listagem de todas as despesas cadastradas
+- Listagem de despesas pendentes (não pagas)
+- Listagem de despesas pagas
+- Registro de pagamento de despesas
+- Exclusão de despesas por ID
+- Relatório de despesas por categoria
+- Cálculo de total geral de despesas
 
 ## Versionamento
 
 O projeto utiliza versionamento semântico simplificado:
 
 - **v0.0.1**: Estrutura inicial e menu básico
-- **v0.0.2**: POC e MVP funcional em memória
+- **v0.0.2**: POC e MVP funcional em memória (versão atual)
 - **v0.0.3**: MVP final documentado e com tags Git
 
 Consulte o arquivo [CHANGELOG.md](CHANGELOG.md) para detalhes sobre cada versão.
